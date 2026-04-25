@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>广西三月三英语作业</title>
+    <title>英语作业提醒</title>
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
@@ -135,20 +135,20 @@
         /* 视网膜模式复选框（左上角） */
         .retina-toggle {
             position: absolute;
-            top: 8px;   /* 坐标：距顶部 8 像素 */
-            left: 8px;  /* 坐标：距左侧 8 像素 */
+            top: 8px;
+            left: 8px;
             z-index: 20;
             cursor: pointer;
             width: 16px;
             height: 16px;
         }
 
-        /* 画板本体：深蓝背景 + 紫色边框 */
+        /* 画板本体 */
         .garfield-canvas {
-            width: 160px;   /* 宽：160 像素 */
-            height: 160px;  /* 高：160 像素 */
-            background-color: #0f172a; /* 深蓝色 */
-            border: 4px solid #8b5cf6; /* 紫色方框 */
+            width: 160px;
+            height: 160px;
+            background-color: #0f172a;
+            border: 4px solid #8b5cf6;
             border-radius: 12px;
             position: relative;
             overflow: hidden;
@@ -156,13 +156,11 @@
             transform-origin: top center;
         }
 
-        /* 触发视网膜模式 (放大两倍) */
         .retina-toggle:checked ~ .garfield-canvas {
             transform: scale(2);
-            margin-bottom: 160px; /* 撑开底部空间，避免遮挡内容 */
+            margin-bottom: 160px;
         }
         
-        /* 响应式适配：小屏幕尺寸自动缩小倍率，避免溢出 */
         @media (max-width: 360px) {
             .retina-toggle:checked ~ .garfield-canvas {
                 transform: scale(1.6);
@@ -170,111 +168,85 @@
             }
         }
 
-        /* 1. 脸部基底 (黄色) */
         .g-face {
             position: absolute;
-            width: 100px;   /* 脸宽 100px */
-            height: 80px;   /* 脸高 80px */
-            background: #fbbf24; /* 黄色 */
-            /* X坐标计算: (160 - 100宽) / 2 = 30px */
+            width: 100px;
+            height: 80px;
+            background: #fbbf24;
             left: 30px;     
-            /* Y坐标计算: 偏上方一点放置 = 44px */
             top: 44px;      
-            border-radius: 50px / 40px; /* 椭圆脸型 */
+            border-radius: 50px / 40px;
             z-index: 5;
             box-shadow: inset -4px -6px 0 rgba(217, 119, 6, 0.2);
         }
 
-        /* 2. 耳朵 (CSS三角形) */
         .g-ear {
             position: absolute;
             width: 0;
             height: 0;
             border-left: 14px solid transparent;  
             border-right: 14px solid transparent; 
-            border-bottom: 30px solid #fbbf24; /* 高度 30px */
+            border-bottom: 30px solid #fbbf24;
             z-index: 4;
-            /* Y坐标计算: 脸部上方 = 18px */
             top: 18px; 
         }
-        .g-ear.left {
-            /* X坐标计算: 左侧偏移 32px */
-            left: 32px;
-            transform: rotate(-20deg);
-        }
-        .g-ear.right {
-            /* X坐标计算: 右侧偏移 32px */
-            right: 32px;
-            transform: rotate(20deg);
-        }
+        .g-ear.left { left: 32px; transform: rotate(-20deg); }
+        .g-ear.right { right: 32px; transform: rotate(20deg); }
 
-        /* 3. 眼睛 (白色椭圆) */
         .g-eye {
             position: absolute;
-            width: 24px;   /* 眼宽 24px */
-            height: 32px;  /* 眼高 32px */
+            width: 24px;
+            height: 32px;
             background: #ffffff;
             border: 2px solid #000000;
             border-radius: 12px / 16px;
-            /* Y坐标计算: 脸部内部偏移 = 12px */
             top: 12px;
             z-index: 6;
             overflow: hidden;
-            /* 5秒自动眨眼动画 */
             animation: blink 5s infinite;
             transform-origin: center;
         }
-        .g-eye.left { left: 22px; }  /* 左眼距离脸部左沿 22px */
-        .g-eye.right { right: 22px; }/* 右眼距离脸部右沿 22px */
+        .g-eye.left { left: 22px; }
+        .g-eye.right { right: 22px; }
 
-        /* 眨眼动画关键帧 (95% 的时间保持睁眼，瞬间闭合) */
         @keyframes blink {
             0%, 92%, 98%, 100% { transform: scaleY(1); }
             95% { transform: scaleY(0.1); }
         }
 
-        /* 4. 瞳孔 */
         .g-pupil {
             position: absolute;
-            width: 10px;   /* 瞳孔宽高 10px */
+            width: 10px;
             height: 10px;
             background: #000000;
             border-radius: 50%;
-            /* 瞳孔定位在眼睛内部底端 */
             bottom: 4px;
             left: 5px;
         }
 
-        /* 5. 鼻子 */
         .g-nose {
             position: absolute;
-            width: 14px;   /* 鼻宽 14px */
-            height: 8px;   /* 鼻高 8px */
-            background: #ef4444; /* 粉红/红色 */
+            width: 14px;
+            height: 8px;
+            background: #ef4444;
             border-radius: 7px / 4px;
-            /* X坐标计算: (100宽 - 14) / 2 = 43px */
             left: 43px;    
-            /* Y坐标计算: 眼睛下方 = 50px */
             top: 50px;     
             border: 1px solid #000;
             z-index: 7;
         }
 
-        /* 6. 黑胡须 (严格在黄色脸上可见) */
         .g-whisker {
             position: absolute;
-            width: 28px;   /* 胡须长 28px */
-            height: 2px;   /* 胡须粗 2px */
-            background: #000000; /* 纯黑 */
+            width: 28px;
+            height: 2px;
+            background: #000000;
             z-index: 7;
         }
-        /* 左侧胡须：伸出脸部边界 */
         .g-whisker.left.w1 { top: 46px; left: -14px; transform: rotate(8deg); }
         .g-whisker.left.w2 { top: 56px; left: -12px; transform: rotate(-5deg); }
-        /* 右侧胡须：伸出脸部边界 */
         .g-whisker.right.w1 { top: 46px; right: -14px; transform: rotate(-8deg); }
         .g-whisker.right.w2 { top: 56px; right: -12px; transform: rotate(5deg); }
-
 
         /* ---------- 便签与其他组件 ---------- */
         .float-container {
@@ -292,6 +264,7 @@
             max-width: 350px;
             transition: transform 0.2s ease;
             cursor: pointer;
+            margin-bottom: 24px;
         }
         .note-wrapper:active { transform: scale(0.97); }
 
@@ -376,6 +349,13 @@
             border-radius: 16px;
         }
 
+        .note-content img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: block;
+        }
+
         .note-requirements {
             font-size: 0.9em;
             background: rgba(255,255,255,0.6);
@@ -401,7 +381,7 @@
             box-shadow: 0 4px 10px rgba(30, 58, 95, 0.3);
         }
 
-        /* 底部导航栏：无表情，仅文字 */
+        /* 底部导航栏 */
         .bottom-nav {
             position: absolute;
             bottom: 24px;
@@ -500,8 +480,8 @@
                 <p>轻松搞定每一天</p>
             </div>
             <div class="date-badge" id="todayDateDisplay">
-                <div class="day" id="todayDay">17</div>
-                <div class="month" id="todayMonth">4月</div>
+                <div class="day" id="todayDay">--</div>
+                <div class="month" id="todayMonth">--月</div>
             </div>
         </div>
         
@@ -532,11 +512,10 @@
                 <div class="badge-current">当前进度</div>
                 <div class="tape"></div>
                 <div class="sticky-note" id="note-current">
-                    <span class="subject-tag">英语 · 假期任务</span>
-                    <div class="note-title">4.17 ~ 4.20</div>
-                    <div class="note-content">1套段考题<br>抄写第五单元单词</div>
-                    <div class="note-requirements">
-                        要求：除人名和地点，没有加黑的单词或短语也要抄写，每个一行。
+                    <span class="subject-tag">英语 · 常规任务</span>
+                    <div class="note-title">4.25 ~ 4.26</div>
+                    <div class="note-content" style="padding: 0; background: transparent;">
+                        <img src="https://i.postimg.cc/bNx1PYb5/9856.png" alt="英语作业图片">
                     </div>
                     <div class="countdown-chip">
                         <span class="countdown-badge" id="countdownDisplay">计算中...</span>
@@ -560,6 +539,19 @@
         </div>
         
         <div class="history-list float-container" style="animation-delay: -2s;">
+            <div class="note-wrapper" onclick="openModal('note-history-2')">
+                <div class="tape"></div>
+                <div class="sticky-note" id="note-history-2" style="background: linear-gradient(145deg, #74ebd5, #ACB6E5); color: #2c3e50;">
+                    <div style="background: rgba(255,255,255,0.4); display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; backdrop-filter: blur(4px);">2026-04-17</div>
+                    <div class="note-title" style="border-bottom-color: rgba(0,0,0,0.1);">4.17 ~ 4.20 假期任务</div>
+                    <div class="note-content" style="background: rgba(255,255,255,0.3);">1套段考题<br>抄写第五单元单词</div>
+                    <div class="note-requirements" style="color: #c0392b; background: rgba(255,255,255,0.5); border: none;">
+                        要求：除人名和地点，没有加黑的单词或短语也要抄写，每个一行。
+                    </div>
+                </div>
+                <div class="note-fold" style="border-right-color: rgba(0,0,0,0.1);"></div>
+            </div>
+
             <div class="note-wrapper" onclick="openModal('note-history-1')">
                 <div class="tape"></div>
                 <div class="sticky-note" id="note-history-1" style="background: linear-gradient(145deg, #a29bfe, #6c5ce7); color: white;">
@@ -627,7 +619,7 @@
         }
         updateDateDisplay();
 
-        // 倒计时计算逻辑保留，并移除表情符号
+        // 倒计时计算逻辑
         function updateCountdown() {
             const countdownSpan = document.getElementById('countdownDisplay');
             if (!countdownSpan) return;
@@ -661,7 +653,7 @@
         }
         updateCountdown();
 
-        // 纯净版语录互动（移除表情）
+        // 纯净版语录互动
         const garfieldQuotes = [
             "我要吃千层面！", "讨厌星期一...", "别吵，本喵在睡觉",
             "快去写作业！", "英语作业？喵都不想写", "给我披萨就帮你",
